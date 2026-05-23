@@ -24,12 +24,15 @@ router.get('/qr', async (req, res) => {
       <h2>${connected ? '✅ WhatsApp já está conectado!' : '⏳ QR ainda não gerado. Aguarde 10s e recarregue.'}</h2>
     </body></html>`)
   }
-  const dataUrl = await QRCode.toDataURL(qr, { width: 300 })
-  res.send(`<html><body style="background:#0a0f1e;color:white;font-family:sans-serif;text-align:center;padding:60px">
+  const dataUrl = await QRCode.toDataURL(qr, { width: 500, margin: 2, errorCorrectionLevel: 'H', color: { dark: '#000000', light: '#ffffff' } })
+  res.send(`<html><body style="background:#0a0f1e;color:white;font-family:sans-serif;text-align:center;padding:40px">
     <h2>📱 Escaneie com o WhatsApp</h2>
-    <img src="${dataUrl}" style="border-radius:12px;margin:20px auto;display:block"/>
-    <p style="color:#aaa">Acesse WhatsApp → Aparelhos conectados → Conectar aparelho</p>
-    <script>setTimeout(()=>location.reload(),15000)</script>
+    <p style="color:#aaa">WhatsApp → Aparelhos conectados → Conectar aparelho</p>
+    <div style="background:white;padding:16px;display:inline-block;margin:20px auto">
+      <img src="${dataUrl}" style="display:block;width:400px;height:400px"/>
+    </div>
+    <p style="color:#aaa;font-size:13px">Atualiza em <span id="t">15</span>s</p>
+    <script>let n=15;setInterval(()=>{n--;document.getElementById('t').innerText=n;if(n<=0)location.reload()},1000)</script>
   </body></html>`)
 })
 
