@@ -1,0 +1,20 @@
+# deps
+node_modules/
+.next/
+
+# env
+.env
+.env.local
+
+# WhatsApp session
+auth/
+backend/auth/
+
+# DB local
+data/
+backend/data/
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
