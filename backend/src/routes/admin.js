@@ -9,7 +9,8 @@ const { generateDailyNews } = require('../services/news')
 const ADMIN_KEY = process.env.ADMIN_SECRET_KEY || 'radar-admin-2026'
 
 router.use((req, res, next) => {
-  if (req.headers['x-admin-key'] !== ADMIN_KEY) {
+  const key = req.headers['x-admin-key'] || req.query.key
+  if (key !== ADMIN_KEY) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
   next()
