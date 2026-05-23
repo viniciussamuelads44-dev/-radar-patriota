@@ -12,6 +12,7 @@ if (!fs.existsSync(AUTH_PATH)) fs.mkdirSync(AUTH_PATH, { recursive: true })
 let sock = null
 let isConnected = false
 let qrPending = false
+let currentQR = null
 
 async function connect() {
   const {
@@ -39,6 +40,7 @@ async function connect() {
   sock.ev.on('connection.update', ({ connection, lastDisconnect, qr }) => {
     if (qr) {
       qrPending = true
+      currentQR = qr
       console.log('\n📱 ESCANEIE O QR CODE NO WHATSAPP:\n')
       qrcode.generate(qr, { small: true })
     }
@@ -58,6 +60,7 @@ async function connect() {
     } else if (connection === 'open') {
       isConnected = true
       qrPending = false
+      currentQR = null
       console.log('✅ WhatsApp conectado!')
     }
   })
@@ -77,4 +80,8 @@ function getStatus() {
   return { connected: isConnected, qrPending }
 }
 
-module.exports = { connect, sendMessage, getStatus }
+function getQR() {
+  return currentQR
+}
+
+module.exports = { connect, sendMessage, getStatus, getQR }

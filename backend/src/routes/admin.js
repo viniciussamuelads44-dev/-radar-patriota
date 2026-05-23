@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { db, prisma } = require('../db')
 const { runDailyEdition } = require('../services/scheduler')
-const { sendMessage, getStatus } = require('../whatsapp')
+const { sendMessage, getStatus, getQR } = require('../whatsapp')
+const QRCode = require('qrcode')
 const { generateDailyNews } = require('../services/news')
 
 const ADMIN_KEY = process.env.ADMIN_SECRET_KEY || 'radar-admin-2026'
@@ -12,6 +13,23 @@ router.use((req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized' })
   }
   next()
+})
+
+router.get('/qr', async (req, res) => {
+  const qr = getQR()
+  if (!qr) {
+    const { connected } = getStatus()
+    return res.send(`<html><body style="background:#0a0f1e;color:white;font-family:sans-serif;text-align:center;padding:60px">
+      <h2>${connected ? '✅ WhatsApp já está conectado!' : '⏳ QR ainda não gerado. Aguarde 10s e recarregue.'}</h2>
+    </body></html>`)
+  }
+  const dataUrl = await QRCode.toDataURL(qr, { width: 300 })
+  res.send(`<html><body style="background:#0a0f1e;color:white;font-family:sans-serif;text-align:center;padding:60px">
+    <h2>📱 Escaneie com o WhatsApp</h2>
+    <img src="${dataUrl}" style="border-radius:12px;margin:20px auto;display:block"/>
+    <p style="color:#aaa">Acesse WhatsApp → Aparelhos conectados → Conectar aparelho</p>
+    <script>setTimeout(()=>location.reload(),15000)</script>
+  </body></html>`)
 })
 
 router.get('/stats', (req, res) => {

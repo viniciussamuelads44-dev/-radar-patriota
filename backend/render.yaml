@@ -15,9 +15,9 @@ services:
       - key: MERCADOPAGO_ACCESS_TOKEN
         sync: false
       - key: FRONTEND_URL
-        sync: false
+        value: https://radar-patriota.vercel.app
       - key: BACKEND_URL
-        sync: false
+        value: https://radar-patriota-backend.onrender.com
     disk:
       name: radar-data
       mountPath: /var/data
