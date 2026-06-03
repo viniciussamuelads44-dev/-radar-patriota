@@ -50,11 +50,11 @@ Se esse briefing te ajudou hoje, *convide* um amigo para assinar — não apenas
 
 Encaminhar é fácil. Assinar é de patriota.
 
-O valor de R$6,90/mês é *simbólico* — serve apenas para cobrir os custos do sistema de análise e envio. Foi pensado assim de propósito: para que *todo brasileiro* tenha acesso à informação conservadora real, sem precisar pagar caro por isso.
+O valor é *simbólico* — serve apenas para cobrir os custos do sistema de análise e envio. Foi pensado assim de propósito: para que *todo brasileiro* tenha acesso à informação conservadora real, sem precisar pagar caro por isso.
 
 Quem recebe o conteúdo de graça pelo encaminhamento e não assina faz exatamente o que a esquerda critica na direita: quer viver às custas de quem trabalha e produz. Um patriota de verdade reconhece o valor do que consome e apoia quem está na linha de frente da informação.
 
-Esse valor não é nada para quem preza por informação real. É questão de caráter.
+O preço é baixo para que ninguém tenha desculpa. É questão de caráter.
 
 👉 *radar-patriota.vercel.app*
 
