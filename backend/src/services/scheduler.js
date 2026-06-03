@@ -41,6 +41,25 @@ async function _runDailyEdition(force = false, period = 'manha') {
   const edition = prisma.edition.findOne({ date: editionDate })
   const subscribers = prisma.subscriber.findMany({ where: { status: 'active' } })
 
+  const indicacaoSuffix = `
+
+━━━━━━━━━━━━━━━━
+🇧🇷 *INDIQUE UM PATRIOTA*
+
+Se esse briefing te ajudou hoje, *convide* um amigo para assinar — não apenas encaminhe.
+
+Encaminhar é fácil. Assinar é de patriota.
+
+Quem usa o conteúdo sem apoiar faz o mesmo que critica na esquerda: quer tudo de graça em cima de quem trabalha. Um verdadeiro patriota reconhece o valor do que consome.
+
+Por R$6,90/mês — menos que um café por semana — você recebe análise conservadora real, sem censura, sem algoritmo. Esse valor não é nada pra quem preza por informação de verdade.
+
+👉 *radar-patriota.vercel.app*
+
+Quanto mais assinantes, melhor a análise. É assim que a direita cresce: pagando pelo que acredita.`
+
+  const contentWithSuffix = content + indicacaoSuffix
+
   console.log(`📤 Enviando ${period} para ${subscribers.length} assinantes...`)
 
   let sentCount = 0
@@ -48,7 +67,7 @@ async function _runDailyEdition(force = false, period = 'manha') {
 
   for (const sub of subscribers) {
     try {
-      await sendMessage(sub.phone, content)
+      await sendMessage(sub.phone, contentWithSuffix)
       prisma.sendLog.create({ subscriber_id: sub.id, edition_id: edition.id, phone: sub.phone, status: 'sent' })
       sentCount++
       await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000))
