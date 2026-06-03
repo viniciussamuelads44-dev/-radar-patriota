@@ -44,21 +44,9 @@ async function _runDailyEdition(force = false, period = 'manha') {
   const indicacaoSuffix = `
 
 ━━━━━━━━━━━━━━━━
-🇧🇷 *INDIQUE UM PATRIOTA*
+🇧🇷 Gostou? *Convide um amigo para assinar* — não apenas encaminhe. O preço é baixo e simbólico para que todo brasileiro tenha acesso. Quanto mais assinantes, melhor e mais completa fica a análise. É assim que a direita cresce: pagando pelo que acredita.
 
-Se esse briefing te ajudou hoje, *convide* um amigo para assinar — não apenas encaminhe.
-
-Encaminhar é fácil. Assinar é de patriota.
-
-O valor é *simbólico* — serve apenas para cobrir os custos do sistema de análise e envio. Foi pensado assim de propósito: para que *todo brasileiro* tenha acesso à informação conservadora real, sem precisar pagar caro por isso.
-
-Quem recebe o conteúdo de graça pelo encaminhamento e não assina faz exatamente o que a esquerda critica na direita: quer viver às custas de quem trabalha e produz. Um patriota de verdade reconhece o valor do que consome e apoia quem está na linha de frente da informação.
-
-O preço é baixo para que ninguém tenha desculpa. É questão de caráter.
-
-👉 *radar-patriota.vercel.app*
-
-Quanto mais assinantes, melhor e mais completa fica a análise. É assim que a direita cresce: pagando pelo que acredita.`
+👉 *radar-patriota.vercel.app*`
 
   const contentWithSuffix = content + indicacaoSuffix
 
