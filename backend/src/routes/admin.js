@@ -5,6 +5,7 @@ const { runDailyEdition } = require('../services/scheduler')
 const { sendMessage, getStatus, getQR } = require('../whatsapp')
 const QRCode = require('qrcode')
 const { generateDailyNews } = require('../services/news')
+const { createBackup, DB_PATH } = require('../services/backup')
 
 const ADMIN_KEY = process.env.ADMIN_SECRET_KEY || 'radar-admin-2026'
 
@@ -55,9 +56,10 @@ router.get('/subscribers', (req, res) => {
 
 router.post('/run-edition', async (req, res) => {
   const force = req.query.force === 'true'
+  const period = ['manha', 'tarde'].includes(req.query.period) ? req.query.period : 'manha'
   try {
-    const result = await runDailyEdition(force)
-    res.json({ ok: true, ...result })
+    const result = await runDailyEdition(force, period)
+    res.json({ ok: true, period, ...result })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
@@ -100,6 +102,24 @@ router.put('/subscriber/:id/deactivate', (req, res) => {
 router.delete('/subscriber/:id', (req, res) => {
   db.prepare('DELETE FROM subscribers WHERE id = ?').run(parseInt(req.params.id))
   res.json({ ok: true })
+})
+
+router.post('/backup', (req, res) => {
+  try {
+    const dest = createBackup()
+    const path = require('path')
+    res.json({ ok: true, file: path.basename(dest) })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+router.get('/backup/download', (req, res) => {
+  try {
+    res.download(DB_PATH, 'radar.db')
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 module.exports = router
