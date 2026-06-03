@@ -44,7 +44,7 @@ async function _runDailyEdition(force = false, period = 'manha') {
   const indicacaoSuffix = `
 
 ━━━━━━━━━━━━━━━━
-🇧🇷 Gostou? *Convide um amigo para assinar* — não apenas encaminhe. O preço é baixo e simbólico para que todo brasileiro tenha acesso. Quanto mais assinantes, melhor e mais completa fica a análise. É assim que a direita cresce: pagando pelo que acredita.
+🇧🇷 Gostou? *Convide um amigo para assinar* — não apenas encaminhe. O preço é baixo e simbólico para que todo brasileiro tenha acesso. Quanto mais assinantes, melhor e mais completa fica a análise. Diferente da esquerda, somos honestos: bom trabalho tem custo, e quem apoia isso age com caráter.
 
 👉 *radar-patriota.vercel.app*`
 
