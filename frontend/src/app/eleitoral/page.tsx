@@ -50,7 +50,7 @@ export default function EleitoralPage() {
         </p>
         <a href="#assinar" className="inline-block font-bold text-black text-xl px-10 py-4 rounded-xl shadow-lg"
           style={{ backgroundColor: '#facc15' }}>
-          Quero acompanhar por R$29 →
+          Quero acompanhar por R$22,22 →
         </a>
         <p className="text-gray-500 text-sm mt-3">Pagamento único • 3 meses de acesso • Cancela quando quiser</p>
       </section>
@@ -88,7 +88,7 @@ export default function EleitoralPage() {
           <div className="space-y-4">
             {[
               ['Marcos A., empresário', 'Em 5 minutos por dia fico mais informado que assistindo 1h de jornal. Sem a narrativa do PT.'],
-              ['Ana C., professora', 'Finalmente uma análise eleitoral que não me trata como idiota. Vale muito os R$29.'],
+              ['Ana C., professora', 'Finalmente uma análise eleitoral que não me trata como idiota. Vale muito os R$22,22.'],
               ['Rodrigo F., advogado', 'Todo dia minha mulher me pede pra contar o que veio no briefing. Compartilhamos a conta.'],
             ].map(([name, text]) => (
               <div key={name as string} className="p-5 rounded-xl" style={{ backgroundColor: '#0a1628', borderLeft: '3px solid #facc15' }}>
@@ -104,9 +104,9 @@ export default function EleitoralPage() {
       <section id="assinar" className="px-4 py-16" style={{ backgroundColor: '#0a1628' }}>
         <div style={{ maxWidth: 480, margin: '0 auto' }}>
           <div className="text-center mb-8">
-            <div className="text-5xl font-black text-yellow-400 mb-1">R$29</div>
+            <div className="text-5xl font-black text-yellow-400 mb-1">R$22,22</div>
             <div className="text-gray-400">pagamento único — acesso até outubro/2026</div>
-            <div className="text-green-400 text-sm mt-1">≈ R$9,67/mês pela análise mais completa do Brasil</div>
+            <div className="text-green-400 text-sm mt-1">≈ R$7,41/mês pela análise mais completa do Brasil</div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -132,7 +132,7 @@ export default function EleitoralPage() {
             <button type="submit" disabled={loading}
               className="w-full font-black text-black text-lg py-4 rounded-xl shadow-lg transition"
               style={{ backgroundColor: loading ? '#a0a0a0' : '#facc15', cursor: loading ? 'not-allowed' : 'pointer' }}>
-              {loading ? 'Aguarde...' : '🗳️ Quero o Briefing Eleitoral — R$29'}
+              {loading ? 'Aguarde...' : '🗳️ Quero o Briefing Eleitoral — R$22,22'}
             </button>
           </form>
 
@@ -149,7 +149,7 @@ export default function EleitoralPage() {
           <div className="space-y-5">
             {[
               ['Por quanto tempo tenho acesso?', 'Seu acesso começa na confirmação do pagamento e vai até outubro de 2026 — mês das eleições presidenciais.'],
-              ['É cobrado todo mês?', 'Não. R$29 uma única vez. Sem renovação automática, sem surpresas.'],
+              ['É cobrado todo mês?', 'Não. R$22,22 uma única vez. Sem renovação automática, sem surpresas.'],
               ['Qual é a diferença para o Radar Patriota?', 'O Radar Patriota cobre todo o noticiário conservador. O Briefing Eleitoral é 100% focado na corrida de 2026 — candidatos, pesquisas, alianças e estratégia.'],
               ['Como recebo?', 'Direto no WhatsApp que você cadastrar, todo dia às 7h30.'],
               ['Posso cancelar?', 'Como é pagamento único, não há assinatura pra cancelar. O acesso expira automaticamente em outubro/2026.'],
@@ -169,7 +169,7 @@ export default function EleitoralPage() {
         <p className="text-gray-300 mb-8">Acompanhe cada movimento com análise que a grande mídia não vai te dar.</p>
         <a href="#assinar" className="inline-block font-bold text-black text-xl px-10 py-4 rounded-xl shadow-lg"
           style={{ backgroundColor: '#facc15' }}>
-          Garantir acesso por R$29 →
+          Garantir acesso por R$22,22 →
         </a>
       </section>
 

@@ -108,7 +108,7 @@ ${nextLine}
 
 _Seu acesso vai até outubro/2026 — eleições presidenciais._
 
-🗳️ *Briefing Eleitoral 2026* — R$29 por 3 meses`
+🗳️ *Briefing Eleitoral 2026* — R$22,22 por 3 meses`
 
       await sendMessage(subscriber.phone, welcome)
 

@@ -4,7 +4,7 @@ const PLANS = {
   monthly:    { label: 'Mensal',     frequency: 1, amount: 12.90 },
   quarterly:  { label: 'Trimestral', frequency: 3, amount: 29.70 },
   semiannual: { label: 'Semestral',  frequency: 6, amount: 41.40 },
-  eleitoral:  { label: 'Eleitoral',  oneTime: true, amount: 29.00 }
+  eleitoral:  { label: 'Eleitoral',  oneTime: true, amount: 22.22 }
 }
 
 async function mpRequest(method, path, body = null) {
@@ -60,7 +60,7 @@ async function createOneTimePayment({ name, phone, email }) {
       title: 'Briefing Eleitoral 2026 — 3 meses',
       description: 'Análise eleitoral diária via WhatsApp até outubro/2026',
       quantity: 1,
-      unit_price: 29.00,
+      unit_price: 22.22,
       currency_id: 'BRL'
     }],
     payer: { name, email },
