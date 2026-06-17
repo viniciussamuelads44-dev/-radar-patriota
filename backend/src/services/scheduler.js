@@ -39,6 +39,10 @@ async function _runDailyEdition(force = false, period = 'manha') {
   }
 
   const edition = prisma.edition.findOne({ date: editionDate })
+
+  // Envia preview para o admin antes dos assinantes
+  notifyAdmin(`👁️ *Preview ${period} — ${editionDate}*\n\n${content}`)
+
   const subscribers = prisma.subscriber.findMany({ where: { status: 'active' } })
 
   const indicacaoSuffix = `
@@ -161,6 +165,10 @@ async function runElectoralEdition(force = false) {
     }
 
     const edition = prisma.edition.findOne({ date: editionDate })
+
+    // Envia preview para o admin antes dos assinantes
+    notifyAdmin(`👁️ *Preview Eleitoral — ${editionDate}*\n\n${content}`)
+
     const now = new Date().toISOString()
     const subscribers = prisma.subscriber.findMany({ where: { status: 'active', plan: 'eleitoral' } })
       .filter(s => !s.expires_at || s.expires_at > now)
