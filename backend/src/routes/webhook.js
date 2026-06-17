@@ -130,9 +130,9 @@ _Seu acesso vai até outubro/2026 — eleições presidenciais._
         : '📲 Todo dia às 6h30 você receberá o briefing conservador mais completo do Brasil.'
 
       const planInfo = {
-        monthly:    'R$12,90/mês (Plano Mensal)',
-        quarterly:  'R$9,90/mês (Plano Trimestral — cobrado R$29,70 a cada 3 meses)',
-        semiannual: 'R$7,90/mês (Plano Semestral — cobrado R$47,40 a cada 6 meses)'
+        monthly:    'R$12,22/mês (Plano Mensal)',
+        quarterly:  'R$9,74/mês (Plano Trimestral — cobrado R$29,22 a cada 3 meses)',
+        semiannual: 'R$6,87/mês (Plano Semestral — cobrado R$41,22 a cada 6 meses)'
       }
       const planLabel = planInfo[subscriber.plan] || planInfo.monthly
 

@@ -1,9 +1,9 @@
 const https = require('https')
 
 const PLANS = {
-  monthly:    { label: 'Mensal',     frequency: 1, amount: 12.90 },
-  quarterly:  { label: 'Trimestral', frequency: 3, amount: 29.70 },
-  semiannual: { label: 'Semestral',  frequency: 6, amount: 41.40 },
+  monthly:    { label: 'Mensal',     frequency: 1, amount: 12.22 },
+  quarterly:  { label: 'Trimestral', frequency: 3, amount: 29.22 },
+  semiannual: { label: 'Semestral',  frequency: 6, amount: 41.22 },
   eleitoral:  { label: 'Eleitoral',  oneTime: true, amount: 22.22 }
 }
 

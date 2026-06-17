@@ -5,9 +5,9 @@ import { useState, useEffect, useRef } from 'react'
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://radar-patriota-backend.fly.dev'
 
 const PLANS = [
-  { id: 'monthly',    name: 'Mensal',     price: 12.90, priceStr: 'R$12,90', billedAs: 'R$12,90 cobrado todo mês', badge: null,           badgeColor: null,    savings: null },
-  { id: 'quarterly',  name: 'Trimestral', price: 9.90,  priceStr: 'R$9,90',  billedAs: 'R$29,70 cobrado a cada 3 meses', badge: 'Mais Popular', badgeColor: '#22c55e', savings: 'Economize 23%' },
-  { id: 'semiannual', name: 'Semestral',  price: 6.90,  priceStr: 'R$6,90',  billedAs: 'R$41,40 cobrado a cada 6 meses', badge: 'Melhor Valor',  badgeColor: '#facc15', savings: 'Economize 46%' },
+  { id: 'monthly',    name: 'Mensal',     price: 12.22, priceStr: 'R$12,22', billedAs: 'R$12,22 cobrado todo mês', badge: null,           badgeColor: null,    savings: null },
+  { id: 'quarterly',  name: 'Trimestral', price: 9.74,  priceStr: 'R$9,74',  billedAs: 'R$29,22 cobrado a cada 3 meses', badge: 'Mais Popular', badgeColor: '#22c55e', savings: 'Economize 20%' },
+  { id: 'semiannual', name: 'Semestral',  price: 6.87,  priceStr: 'R$6,87',  billedAs: 'R$41,22 cobrado a cada 6 meses', badge: 'Melhor Valor',  badgeColor: '#facc15', savings: 'Economize 44%' },
 ]
 
 export default function Home() {
@@ -578,8 +578,8 @@ O cenário conservador nacional e os desdobramentos desta semana...
               viniciussamuelads44@gmail.com
             </a>
             {' '}·{' '}
-            <a href="https://wa.me/5531935013167" target="_blank" rel="noopener noreferrer" className="text-yellow-500 underline">
-              WhatsApp (31) 93501-3167
+            <a href="https://wa.me/5531981071967" target="_blank" rel="noopener noreferrer" className="text-yellow-500 underline">
+              WhatsApp (31) 98107-1967
             </a>
           </p>
           <div className="mt-3 flex justify-center gap-4 text-xs">
