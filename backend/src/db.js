@@ -18,6 +18,7 @@ db.exec(`
     phone TEXT UNIQUE NOT NULL,
     email TEXT,
     status TEXT DEFAULT 'pending',
+    plan TEXT DEFAULT 'monthly',
     mp_subscription_id TEXT,
     mp_payer_email TEXT,
     created_at TEXT DEFAULT (datetime('now', 'localtime')),
@@ -108,8 +109,20 @@ const prisma = {
       const cols = Object.keys(data).join(', ')
       const placeholders = Object.keys(data).map(() => '?').join(', ')
       db.prepare(`INSERT INTO send_log (${cols}) VALUES (${placeholders})`).run(...Object.values(data))
+    },
+    findMany: (opts = {}) => {
+      let query = 'SELECT * FROM send_log'
+      const params = []
+      if (opts.where) {
+        const conditions = Object.entries(opts.where).map(([k, v]) => { params.push(v); return `${k} = ?` })
+        query += ' WHERE ' + conditions.join(' AND ')
+      }
+      return db.prepare(query).all(...params)
     }
   }
 }
+
+try { db.exec("ALTER TABLE subscribers ADD COLUMN plan TEXT DEFAULT 'monthly'") } catch(e) {}
+try { db.exec("ALTER TABLE subscribers ADD COLUMN expires_at TEXT") } catch(e) {}
 
 module.exports = { db, prisma }

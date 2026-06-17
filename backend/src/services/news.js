@@ -170,4 +170,84 @@ Fontes: Jovem Pan, Gazeta do Povo, Pleno News, O Antagonista, CNN Brasil, G1 (pa
   }
 }
 
-module.exports = { generateDailyNews }
+async function generateElectoralBriefing() {
+  const now = new Date()
+  const dateStr = now.toLocaleDateString('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).toUpperCase()
+
+  const prompt = `Você é o analista-chefe do BRIEFING ELEITORAL 2026, o monitoramento mais completo da corrida presidencial brasileira entregue via WhatsApp.
+
+Hoje é ${dateStr}. Pesquise o que aconteceu HOJE no cenário eleitoral brasileiro usando o Google Search.
+
+Seu público: brasileiros conservadores que querem acompanhar de perto a corrida de 2026 — pesquisas, movimentos de candidatos, alianças, estratégias e o que a mídia não mostra.
+
+Gere o briefing no formato EXATO abaixo. Sem texto extra antes ou depois.
+
+🗳️ *BRIEFING ELEITORAL 2026*
+📅 ${dateStr}
+━━━━━━━━━━━━━━━━
+
+🔥 *DESTAQUE DO DIA*
+[2-3 linhas sobre o movimento mais importante do dia na corrida eleitoral. Seja direto e impactante.]
+
+━━━━━━━━━━━━━━━━
+📊 *TERMÔMETRO DAS PESQUISAS*
+[Status atual das principais pesquisas: Lula vs. Bolsonaro/direita. Cite números reais e fontes. Se nova pesquisa saiu hoje, destaque.]
+
+━━━━━━━━━━━━━━━━
+🎯 *OS 3 MOVIMENTOS DO DIA*
+
+1️⃣ *[TÍTULO EM MAIÚSCULAS]*
+[4-5 linhas: O que aconteceu + impacto na corrida eleitoral + quem ganhou ou perdeu com isso.]
+
+2️⃣ *[TÍTULO EM MAIÚSCULAS]*
+[4-5 linhas: O que aconteceu + impacto na corrida eleitoral + quem ganhou ou perdeu com isso.]
+
+3️⃣ *[TÍTULO EM MAIÚSCULAS]*
+[4-5 linhas: O que aconteceu + impacto na corrida eleitoral + quem ganhou ou perdeu com isso.]
+
+━━━━━━━━━━━━━━━━
+🤝 *ALIANÇAS E BASTIDORES*
+[3-4 linhas sobre movimentos de bastidor: negociações, apoios, traições, candidaturas em formação. O que está sendo costurado nos bastidores do poder.]
+
+━━━━━━━━━━━━━━━━
+📉 *QUEM CAIU E QUEM SUBIU HOJE*
+• ✅ *Ganhou:* [Nome e por quê em 1 linha]
+• ✅ *Ganhou:* [Nome e por quê em 1 linha]
+• ❌ *Perdeu:* [Nome e por quê em 1 linha]
+• ❌ *Perdeu:* [Nome e por quê em 1 linha]
+
+━━━━━━━━━━━━━━━━
+🧠 *ANÁLISE ESTRATÉGICA*
+[5-6 linhas de análise profunda sob perspectiva conservadora. O que o campo da direita precisa fazer para vencer em 2026? Quais são as janelas de oportunidade? Seja específico e contundente.]
+
+━━━━━━━━━━━━━━━━
+📅 *O QUE VEM ATRÁS*
+[2-3 linhas sobre eventos eleitorais importantes dos próximos 7 dias: convenções, datas-limite, eventos políticos, debates previstos.]
+
+━━━━━━━━━━━━━━━━
+✝️ *FRASE DO DIA*
+["Frase inspiradora de líder conservador relacionada à luta política" — Autor]
+
+🗳️ *Briefing Eleitoral 2026* — Todo dia às 7h30, direto no seu WhatsApp.
+
+Fontes: Datafolha, Quaest, Atlas Intel, Jovem Pan, Gazeta do Povo, O Antagonista, Metrópoles, CNN Brasil. Foco: pesquisas eleitorais, candidatos 2026, alianças, estratégias de campanha, STF e eleições, economia e eleições.`
+
+  try {
+    const content = await geminiRequest(prompt, 'gemini-2.5-flash')
+    return content.trim()
+  } catch (err) {
+    if (err.message.includes('503') || err.message.includes('UNAVAILABLE')) {
+      const content = await geminiRequest(prompt, 'gemini-2.5-flash-lite')
+      return content.trim()
+    }
+    throw err
+  }
+}
+
+module.exports = { generateDailyNews, generateElectoralBriefing }

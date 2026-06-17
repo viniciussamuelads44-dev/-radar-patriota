@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { db, prisma } = require('../db')
-const { runDailyEdition } = require('../services/scheduler')
+const { runDailyEdition, runElectoralEdition } = require('../services/scheduler')
 const { sendMessage, getStatus, getQR } = require('../whatsapp')
 const QRCode = require('qrcode')
 const { generateDailyNews } = require('../services/news')
@@ -70,6 +70,16 @@ router.post('/send-test', async (req, res) => {
   try {
     await sendMessage(phone, message || '🇧🇷 Teste do Radar Patriota!')
     res.json({ ok: true })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+router.post('/run-eleitoral', async (req, res) => {
+  const force = req.query.force === 'true'
+  try {
+    const result = await runElectoralEdition(force)
+    res.json({ ok: true, ...result })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }

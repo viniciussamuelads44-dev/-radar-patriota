@@ -1,6 +1,6 @@
 const cron = require('node-cron')
 const { prisma } = require('../db')
-const { generateDailyNews } = require('./news')
+const { generateDailyNews, generateElectoralBriefing } = require('./news')
 const { sendMessage } = require('../whatsapp')
 const { createBackup } = require('./backup')
 const { notifyAdmin } = require('./notify-admin')
@@ -131,6 +131,71 @@ function checkMissedEdition(period = 'manha') {
   }
 }
 
+let runningEleitoral = false
+
+async function runElectoralEdition(force = false) {
+  if (runningEleitoral) { console.log('Edição eleitoral já em andamento, pulando.'); return { skipped: true } }
+  runningEleitoral = true
+  try {
+    const today = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
+      .split('/').reverse().join('-')
+    const editionDate = `${today}-eleitoral`
+    const existing = prisma.edition.findOne({ date: editionDate })
+
+    if (existing?.sent_at && !force) {
+      console.log(`Edição eleitoral ${editionDate} já enviada`)
+      return { skipped: true }
+    }
+
+    console.log('🗳️ Gerando briefing eleitoral...')
+    let content
+    if (existing && !force) {
+      content = existing.content
+    } else {
+      content = await generateElectoralBriefing()
+      if (existing) {
+        prisma.edition.update({ date: editionDate }, { content })
+      } else {
+        prisma.edition.create({ date: editionDate, content })
+      }
+    }
+
+    const edition = prisma.edition.findOne({ date: editionDate })
+    const now = new Date().toISOString()
+    const subscribers = prisma.subscriber.findMany({ where: { status: 'active', plan: 'eleitoral' } })
+      .filter(s => !s.expires_at || s.expires_at > now)
+
+    const suffix = `
+
+━━━━━━━━━━━━━━━━
+🗳️ *Briefing Eleitoral 2026* — Para indicar um amigo, envie o link:
+👉 *radar-patriota.vercel.app/eleitoral*`
+
+    console.log(`📤 Enviando eleitoral para ${subscribers.length} assinante(s)...`)
+    let sentCount = 0, errorCount = 0
+
+    for (const sub of subscribers) {
+      try {
+        await sendMessage(sub.phone, content + suffix)
+        prisma.sendLog.create({ subscriber_id: sub.id, edition_id: edition.id, phone: sub.phone, status: 'sent' })
+        sentCount++
+        await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000))
+      } catch (err) {
+        errorCount++
+        prisma.sendLog.create({ subscriber_id: sub.id, edition_id: edition.id, phone: sub.phone, status: 'error', error: err.message })
+        console.error(`Erro eleitoral ${sub.phone}:`, err.message)
+      }
+    }
+
+    prisma.edition.update({ date: editionDate }, { sent_count: sentCount, sent_at: new Date().toISOString() })
+    console.log(`✅ Eleitoral enviado: ${sentCount}/${subscribers.length} | Erros: ${errorCount}`)
+    notifyAdmin(`🗳️ *Briefing Eleitoral ${today}*\n\n✅ Enviados: ${sentCount}\n❌ Erros: ${errorCount}\n👥 Assinantes: ${subscribers.length}`)
+    return { sentCount, errorCount, total: subscribers.length }
+  } finally {
+    runningEleitoral = false
+  }
+}
+
 function startScheduler() {
   // Manhã: disparo 6h30, retry 7h30, verificação 8h/9h/10h
   cron.schedule('30 6 * * *', () => {
@@ -164,10 +229,13 @@ function startScheduler() {
     checkMissedEdition('tarde')
   }, { timezone: 'America/Sao_Paulo' })
 
-  console.log('⏰ Scheduler: manhã 6h30 + tarde 18h (Brasília)')
+  // Eleitoral: 7h30 diário
+  cron.schedule('30 7 * * *', () => {
+    console.log('⏰ Cron 7h30: iniciando briefing eleitoral...')
+    runElectoralEdition(false).catch(console.error)
+  }, { timezone: 'America/Sao_Paulo' })
 
-  setTimeout(() => checkMissedEdition('manha'), 10_000)
-  setTimeout(() => checkMissedEdition('tarde'), 12_000)
+  console.log('⏰ Scheduler: manhã 6h30 + tarde 18h + eleitoral 7h30 (Brasília)')
 }
 
-module.exports = { startScheduler, runDailyEdition, checkMissedEdition }
+module.exports = { startScheduler, runDailyEdition, checkMissedEdition, runElectoralEdition }
